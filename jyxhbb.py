@@ -49,10 +49,19 @@ class Jyxhbb:
 
         returns a list of utilities per slot.
         """
-        # TODO: Fill this in
-        utilities = []   # Change this
+        # Compute the amount needed per slot
+        info = self.slot_info(t, history, reserve)
 
+        # Compute the utility of winning the slot: pay the min_bid because
+        # that's the bid of the next highest bid
+        clicks = history.round(t-1).clicks
 
+        def calc_util(i):
+            (s, min_bid, max_bid) = info[i]
+            assert s == i
+            return clicks[i] * (self.value - min_bid)
+		
+        utilities = map(calc_util, range(len(clicks)))
         return utilities
 
     def target_slot(self, t, history, reserve):
@@ -81,8 +90,11 @@ class Jyxhbb:
         prev_round = history.round(t-1)
         (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
 
-        # TODO: Fill this in.
-        bid = 0  # change this
+        if self.value < min_bid or slot == 0: # Not expecting to win
+            bid = self.value
+        else: # Bid regularly
+            clicks = prev_round.clicks
+            bid = self.value - ((clicks[slot] * (self.value - min_bid)) / clicks[slot-1])
 
         return bid
 
