@@ -60,7 +60,7 @@ class Jyxhbb:
             (s, min_bid, max_bid) = info[i]
             assert s == i
             return clicks[i] * (self.value - min_bid)
-		
+
         utilities = map(calc_util, range(len(clicks)))
         return utilities
 
