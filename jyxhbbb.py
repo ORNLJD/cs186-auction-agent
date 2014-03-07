@@ -56,16 +56,11 @@ class Jyxhbbb:
         def calc_util(i):
             (s, min_bid, max_bid) = info[i]
 
-            # Calculate the number of clicks you can afford at this rate
-            if min_bid == 0:
-                n_clicks = 0
+            util = clicks[i] * (self.value - min_bid)
+            if self.budget < min_bid * clicks[i] * (48 - t) and min_bid != 0: # Unsustainable
+                return util * self.budget / (min_bid * clicks[i] * (48 - t)) 
             else:
-                n_clicks = self.budget / min_bid
-
-            # Estimate number of clicks available at this slot
-            clicks_available = 50 * (48 - t) * (0.75 ** i)
-
-            return min(clicks_available, n_clicks) * (self.value - min_bid)
+                return util
 
         utilities = map(calc_util, range(len(clicks)))
         return utilities
