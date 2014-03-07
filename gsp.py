@@ -36,7 +36,7 @@ class GSP:
         allocated_bids = valid_bids[:num_slots]
         if len(allocated_bids) == 0:
             return ([], [])
-        
+
         (allocation, just_bids) = zip(*allocated_bids)
 
         # Each pays the bid below them, or the reserve
@@ -70,7 +70,7 @@ class GSP:
             else:
                 max_bid = reserve if slot > 0 else None
             return (reserve, max_bid)
-        
+
         min_bid = bid_amounts[slot]
         max_bid = bid_amounts[slot-1] if slot > 0 else None
         return (min_bid, max_bid)

@@ -44,6 +44,8 @@ class VCG:
 
         (allocation, just_bids) = zip(*allocated_bids)
 
+        bids.sort(rev_cmp_bids)
+
         # TODO: You just have to implement this function
         def total_payment(k):
             """
