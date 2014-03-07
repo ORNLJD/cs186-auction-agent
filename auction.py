@@ -138,7 +138,7 @@ def sim(config):
         map(agent_value, slot_occupants[t], slot_clicks[t], slot_payments[t])
         
         ## Debugging. Set to True to see what's happening.
-        log_console = False
+        log_console = True 
         if log_console:
             logging.info("\t=== Round %d ===" % t)
             logging.info("\tnum_slots: %d" % num_slots)
